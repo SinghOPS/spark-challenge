@@ -6,6 +6,7 @@ An AWS-native AI governance layer that audits AI outputs for proxy bias, calcula
 
 - Detailed architecture: `docs/architecture.md`
 - User guide: `docs/user-guide.md`
+- Testing guide: `docs/testing-guide.md`
 
 ## Architecture
 
