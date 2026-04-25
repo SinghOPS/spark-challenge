@@ -2,6 +2,11 @@
 
 An AWS-native AI governance layer that audits AI outputs for proxy bias, calculates legal liability debt, and guides ethical decision-making through Socratic scaffolding.
 
+## Documentation
+
+- Detailed architecture: `docs/architecture.md`
+- User guide: `docs/user-guide.md`
+
 ## Architecture
 
 | Layer | Service | Purpose |
