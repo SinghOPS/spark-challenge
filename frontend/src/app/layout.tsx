@@ -31,6 +31,12 @@ export default function RootLayout({
                 New Audit
               </a>
               <a
+                href="/about"
+                className="text-[var(--color-text-muted)] transition hover:text-[var(--color-text)]"
+              >
+                About
+              </a>
+              <a
                 href="/dashboard"
                 className="text-[var(--color-text-muted)] transition hover:text-[var(--color-text)]"
               >
