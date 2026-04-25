@@ -11,7 +11,7 @@ An AWS-native AI governance layer that audits AI outputs for proxy bias, calcula
 | Ingest | AWS Lambda (Python) | Parses CSV, uploads to S3, runs bias analysis |
 | Bias Engine | AWS Lambda (Python) | Statistical parity checks (Disparate Impact / 4/5ths) |
 | Logic Gate | AWS Lambda (Python) | 4/5ths rule, Legal Liability Debt calculation, proxy detection |
-| Socratic Tutor | AWS Lambda + Bedrock | Claude 3.5 Sonnet for guided fairness exploration |
+| Socratic Tutor | AWS Lambda + Bedrock | Claude Sonnet 4.6 for guided fairness exploration |
 | Storage | DynamoDB + S3 | Audit logs, chat history, CSV data |
 
 ## Project Structure
@@ -31,7 +31,7 @@ spark-challenge/
 │       ├── app/          # Pages (upload, audit detail, dashboard)
 │       ├── components/   # UI components
 │       └── lib/          # API client
-└── docs/                 # Documentation
+└── scripts/              # Deployment helpers
 ```
 
 ## Prerequisites
@@ -40,6 +40,7 @@ spark-challenge/
 - Python 3.12
 - AWS CLI configured with appropriate credentials
 - AWS CDK CLI (`npm install -g aws-cdk`)
+- For Amplify GitHub deployment: a GitHub PAT with repository/webhook permissions
 
 ## Setup
 
@@ -64,6 +65,31 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
+The frontend is configured for static export (`next.config.js` sets `output: "export"`).
+
+### 3. One-shot AWS deployment (Backend + Amplify via GitHub)
+
+Use the script below to:
+- deploy backend first (CDK),
+- create/update an Amplify app connected to GitHub,
+- create/update a production branch,
+- trigger a frontend release build.
+
+```bash
+export GITHUB_REPO_URL="https://github.com/<org>/<repo>"
+export GITHUB_ACCESS_TOKEN="<github_pat_with_repo_and_webhook_access>"
+
+# optional overrides
+# export STACK_NAME="GuardianStack"
+# export AWS_REGION="us-east-1"
+# export AMPLIFY_APP_NAME="guardian-frontend"
+# export AMPLIFY_BRANCH_NAME="main"
+
+./scripts/deploy-amplify.sh
+```
+
+After it runs, the script prints your Amplify app ID, release job ID, and console URL.
+
 ## Guardrails
 
 ### Ethics (Inclusion) — The 4/5ths Rule
@@ -76,7 +102,14 @@ liability = (1.0 - impact_ratio) * $1,000,000
 ```
 
 ### Education (Agency) — Socratic Scaffolding
-When bias is detected, Bedrock (Claude 3.5 Sonnet) guides users through understanding the bias via Socratic questioning rather than prescriptive fixes.
+When bias is detected, Bedrock (Claude Sonnet 4.6) guides users through understanding the bias via Socratic questioning rather than prescriptive fixes.
 
 ### Environment (Accountability) — Green-Audit Compute
 All compute runs on serverless Lambda, spinning up only during audits to minimize carbon footprint.
+
+## API Endpoints
+
+- `POST /audit` - start an audit from CSV payload
+- `GET /audit/{auditId}` - fetch a single audit result
+- `GET /audits` - list historical audits
+- `POST /chat` - send Socratic tutor message for an audit
