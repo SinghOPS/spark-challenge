@@ -1,1 +1,38 @@
+# Dependencies
+node_modules/
+cdk/node_modules/
+frontend/node_modules/
+
+# Build output
+cdk/dist/
+cdk/cdk.out/
+frontend/.next/
+frontend/out/
+
+# Environment
+.env
+.env.local
+frontend/.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+
+# CDK
+cdk.context.json
+
+# AI-DLC
 .aidlc

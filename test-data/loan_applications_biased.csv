@@ -1,0 +1,21 @@
+name,race,zip_code,years_experience,credit_score,income,approved
+Alice Johnson,GroupA,10001,5,720,65000,1
+Bob Smith,GroupA,10002,3,680,55000,1
+Carol Davis,GroupA,10003,7,750,82000,1
+Dan Wilson,GroupA,10001,2,640,48000,1
+Emily Brown,GroupA,10004,10,790,95000,1
+Frank Miller,GroupA,10002,4,700,60000,1
+Grace Lee,GroupA,10003,6,730,71000,1
+Henry Clark,GroupA,10001,8,760,88000,1
+Irene Hall,GroupA,10004,1,620,42000,0
+Jack Adams,GroupA,10002,9,780,92000,1
+Karen White,GroupB,20001,6,710,68000,0
+Leo Harris,GroupB,20002,4,690,57000,0
+Maria Garcia,GroupB,20003,8,740,80000,1
+Nathan Scott,GroupB,20001,3,660,50000,0
+Olivia King,GroupB,20004,5,700,63000,0
+Paul Turner,GroupB,20002,7,720,75000,0
+Quinn Rivera,GroupB,20003,2,630,45000,0
+Rachel Moore,GroupB,20001,10,800,98000,1
+Sam Phillips,GroupB,20004,1,610,40000,0
+Tina Edwards,GroupB,20002,4,670,52000,0

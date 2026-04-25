@@ -1,0 +1,21 @@
+name,gender,department,years_experience,education_level,performance_score,promoted
+Alice Chen,Female,Engineering,5,Masters,88,1
+Bob Patel,Male,Engineering,4,Bachelors,82,1
+Carol Kim,Female,Marketing,3,Masters,90,1
+Dan Lopez,Male,Engineering,6,PhD,85,1
+Emily Nguyen,Female,Sales,2,Bachelors,78,0
+Frank O'Brien,Male,Marketing,7,Masters,92,1
+Grace Taylor,Female,Engineering,8,PhD,95,1
+Henry Williams,Male,Sales,3,Bachelors,75,0
+Irene Zhang,Female,Marketing,5,Masters,86,1
+Jack Brown,Male,Engineering,4,Bachelors,80,1
+Karen Davis,Female,Sales,6,Masters,84,1
+Leo Martinez,Male,Marketing,2,Bachelors,72,0
+Maria Johnson,Female,Engineering,9,PhD,96,1
+Nathan Lee,Male,Sales,5,Masters,83,1
+Olivia Wilson,Female,Marketing,3,Bachelors,79,0
+Paul Anderson,Male,Engineering,7,Masters,91,1
+Quinn Thomas,Female,Sales,4,Bachelors,77,1
+Ryan Garcia,Male,Marketing,6,Masters,87,1
+Sara Moore,Female,Engineering,2,Bachelors,74,0
+Tom Jackson,Male,Sales,8,PhD,93,1
