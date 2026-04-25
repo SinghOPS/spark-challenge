@@ -3,6 +3,8 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
+const MAX_CSV_BYTES = 6 * 1024 * 1024; // Keep under API Gateway JSON payload ceiling after base64 expansion.
+
 interface CsvUploadProps {
   onFileAccepted: (file: File, headers: string[]) => void;
 }
@@ -18,6 +20,11 @@ export default function CsvUpload({ onFileAccepted }: CsvUploadProps) {
 
       if (!file.name.endsWith(".csv")) {
         setError("Please upload a .csv file");
+        return;
+      }
+
+      if (file.size > MAX_CSV_BYTES) {
+        setError("CSV is too large. Please upload a file smaller than 6 MB.");
         return;
       }
 
@@ -43,7 +50,7 @@ export default function CsvUpload({ onFileAccepted }: CsvUploadProps) {
     onDrop,
     accept: { "text/csv": [".csv"] },
     maxFiles: 1,
-    maxSize: 50 * 1024 * 1024,
+    maxSize: MAX_CSV_BYTES,
   });
 
   return (
@@ -76,7 +83,7 @@ export default function CsvUpload({ onFileAccepted }: CsvUploadProps) {
             : "Drag & drop a CSV file, or click to browse"}
         </p>
         <p className="mt-2 text-sm text-[var(--color-text-muted)]">
-          Loan applications, hiring candidates, or any decision dataset
+          Loan applications, hiring candidates, or any decision dataset (max 6 MB)
         </p>
       </div>
 

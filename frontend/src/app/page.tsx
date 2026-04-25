@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import CsvUpload from "@/components/csv-upload";
 import { startAudit } from "@/lib/api";
 
+const MAX_CSV_BYTES = 6 * 1024 * 1024;
+
 export default function HomePage() {
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
@@ -24,6 +26,10 @@ export default function HomePage() {
 
   async function handleSubmit() {
     if (!file || !facetColumn || !outcomeColumn) return;
+    if (file.size > MAX_CSV_BYTES) {
+      setError("CSV is too large. Please upload a file smaller than 6 MB.");
+      return;
+    }
     if (facetColumn === outcomeColumn) {
       setError("Protected attribute and outcome must be different columns");
       return;
