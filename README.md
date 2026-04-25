@@ -14,6 +14,42 @@ An AWS-native AI governance layer that audits AI outputs for proxy bias, calcula
 | Socratic Tutor | AWS Lambda + Bedrock | Claude Sonnet 4.6 for guided fairness exploration |
 | Storage | DynamoDB + S3 | Audit logs, chat history, CSV data |
 
+### Architecture Diagram
+
+```mermaid
+flowchart TD
+    U[User]
+    F[Frontend<br/>Next.js + Amplify]
+    API[API Gateway]
+
+    U --> F
+    F -->|/audit, /audits, /chat| API
+
+    subgraph Compute[Lambda Compute]
+      I[Ingest]
+      L[Logic Gate]
+      C[Socratic Chat]
+    end
+
+    subgraph Storage[Data Layer]
+      S3[(S3)]
+      DDB[(DynamoDB)]
+    end
+
+    API --> I
+    API --> L
+    API --> C
+
+    I -->|store CSV| S3
+    I -->|write analysis.json| S3
+    S3 -->|output event| L
+
+    L -->|audit results| DDB
+    C -->|chat history + audit context| DDB
+
+    C -->|converse| B[Amazon Bedrock<br/>Claude Sonnet 4.6]
+```
+
 ## Project Structure
 
 ```
@@ -76,17 +112,12 @@ Use the script below to:
 - trigger a frontend release build.
 
 ```bash
-export GITHUB_REPO_URL="https://github.com/<org>/<repo>"
-export GITHUB_ACCESS_TOKEN="<github_pat_with_repo_and_webhook_access>"
-
-# optional overrides
-# export STACK_NAME="GuardianStack"
-# export AWS_REGION="us-east-1"
-# export AMPLIFY_APP_NAME="guardian-frontend"
-# export AMPLIFY_BRANCH_NAME="main"
-
 ./scripts/deploy-amplify.sh
 ```
+
+The script prompts for:
+- GitHub repository URL
+- GitHub access token (hidden input)
 
 After it runs, the script prints your Amplify app ID, release job ID, and console URL.
 

@@ -5,7 +5,7 @@ set -euo pipefail
 # Deploy Guardian backend (CDK), then create/update an Amplify app that pulls
 # frontend code from GitHub and triggers a production deployment.
 #
-# Required env vars:
+# Required values (prompted interactively):
 #   GITHUB_REPO_URL        e.g. https://github.com/<org>/<repo>
 #   GITHUB_ACCESS_TOKEN    GitHub PAT with repo read + webhook permissions
 #
@@ -24,8 +24,19 @@ if [[ ! -d "${CDK_DIR}" ]]; then
   exit 1
 fi
 
-: "${GITHUB_REPO_URL:?GITHUB_REPO_URL is required}"
-: "${GITHUB_ACCESS_TOKEN:?GITHUB_ACCESS_TOKEN is required}"
+read -r -p "Enter GitHub repository URL (https://github.com/<org>/<repo>): " GITHUB_REPO_URL
+read -r -s -p "Enter GitHub access token: " GITHUB_ACCESS_TOKEN
+echo
+
+if [[ -z "${GITHUB_REPO_URL}" ]]; then
+  echo "GITHUB_REPO_URL is required." >&2
+  exit 1
+fi
+
+if [[ -z "${GITHUB_ACCESS_TOKEN}" ]]; then
+  echo "GITHUB_ACCESS_TOKEN is required." >&2
+  exit 1
+fi
 
 STACK_NAME="${STACK_NAME:-GuardianStack}"
 AWS_REGION="${AWS_REGION:-$(aws configure get region || true)}"
